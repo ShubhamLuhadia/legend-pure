@@ -16,6 +16,8 @@ import meta::pure::persistence::metamodel::batch::validitymilestoning::*;
 import meta::pure::persistence::metamodel::batch::validitymilestoning::derivation::*;
 import meta::pure::persistence::metamodel::reader::*;
 import meta::pure::persistence::metamodel::trigger::*;
+import meta::pure::persistence::metamodel::ownership::*;
+import meta::pure::persistence::metamodel::policy::*;
 
 /**********
  * persistence pipe
@@ -462,4 +464,70 @@ meta::pure::persistence::metamodel::batch::validitymilestoning::derivation::Sour
 
    {doc.doc = 'The property in the model class that provides the "thru" datetime for the validity (business) temporal dimension.'}
    sourceDateTimeThruProperty: Property<Nil, Any|1>[1];
+}
+
+
+/**********
+ * Alloy Streaming - Backend
+ **********/
+
+Class
+{doc.doc = 'Backend details for executing on the On Premise ETL Service.'}
+meta::pure::persistence::metamodel::AlloyStreamingPersistencePipeBackend extends PersistencePipeBackend
+{
+   {doc.doc = 'The property in the model class that provides the ownership of a pipeline.'}
+   ownership: Ownership[1];
+
+   {doc.doc = 'The property in the model class that provides the maintenance policy of a pipeline.'}
+   policy: Policy[1];
+}
+
+/**********
+ * Alloy Streaming - Ownership
+ **********/
+
+Class
+<<typemodifiers.abstract>>
+{doc.doc = 'Ownership details for accessing Alloy Streaming pipelines.'}
+meta::pure::persistence::metamodel::ownership::Ownership
+{
+   {doc.doc = 'The unique name of the pipeline'}
+   pipelineName: String[1];
+}
+
+Class
+{doc.doc = 'System ID based ownership details for accessing Alloy Streaming pipelines.'}
+meta::pure::persistence::metamodel::ownership::SystemIdBasedOwnership
+{
+   {doc.doc = 'The systemId that owns pipelines'}
+   systemId: String[1];
+
+   {doc.doc = 'The type of system that owns pipelines'}
+   systemType: String[1];
+}
+
+/**********
+ * Alloy Streaming - Policy
+ **********/
+
+Class
+{doc.doc = 'Policy specifying the maintenance configuration for a pipeline.'}
+meta::pure::persistence::metamodel::policy::Policy
+{
+   {doc.doc = 'The details of notifying pipeline run updates'}
+   notification: NotificationPolicy[1];
+}
+
+Class
+<<typemodifiers.abstract>>
+{doc.doc = 'Policy specifying the notification configuration for a pipeline.'}
+meta::pure::persistence::metamodel::policy::NotificationPolicy
+{
+}
+
+Class
+{doc.doc = 'Policy specifying the email-based notification configuration for a pipeline.'}
+meta::pure::persistence::metamodel::policy::EmailNotificationPolicy
+{
+    emailIds: String[1..*];
 }
