@@ -483,6 +483,29 @@ meta::pure::persistence::metamodel::AlloyStreamingPersistencePipeBackend extends
 }
 
 /**********
+ * Alloy Streaming - Trigger
+ **********/
+
+Class
+{doc.doc = 'A trigger defined by the provided schedule.'}
+meta::pure::persistence::metamodel::trigger::ScheduledTrigger extends Trigger
+{
+    {doc.doc = 'the pattern describing the days on which to schedule an instance of the pipeline'}
+    scheduleDays: String[1];
+
+    {doc.doc = 'The first date to start scheduling the pipeline from'}
+    startDate: StrictDate[1];
+
+    {doc.doc = 'For the day specified by scheduleDays, at what exact time to schedule instances'}
+    startTime: String[1];
+
+    endDate: StrictDate[0..1];
+    repeatCount: Integer[0..1];
+    repeatIntervalMinutes: Integer[0..1];
+    maxDurationMinutes: Integer[0..1]
+}
+
+/**********
  * Alloy Streaming - Ownership
  **********/
 
@@ -497,7 +520,7 @@ meta::pure::persistence::metamodel::ownership::Ownership
 
 Class
 {doc.doc = 'System ID based ownership details for accessing Alloy Streaming pipelines.'}
-meta::pure::persistence::metamodel::ownership::SystemIdBasedOwnership
+meta::pure::persistence::metamodel::ownership::SystemIdBasedOwnership extends Ownership
 {
    {doc.doc = 'The systemId that owns pipelines'}
    systemId: String[1];
@@ -527,7 +550,7 @@ meta::pure::persistence::metamodel::policy::NotificationPolicy
 
 Class
 {doc.doc = 'Policy specifying the email-based notification configuration for a pipeline.'}
-meta::pure::persistence::metamodel::policy::EmailNotificationPolicy
+meta::pure::persistence::metamodel::policy::EmailNotificationPolicy extends NotificationPolicy
 {
-    emailIds: String[1..*];
+    notifyees: String[1..*];
 }
