@@ -17,6 +17,7 @@ import meta::pure::persistence::metamodel::batch::validitymilestoning::derivatio
 import meta::pure::persistence::metamodel::reader::*;
 import meta::pure::persistence::metamodel::trigger::*;
 import meta::pure::persistence::metamodel::ownership::*;
+import meta::pure::persistence::metamodel::runner::*;
 import meta::pure::persistence::metamodel::policy::*;
 
 /**********
@@ -473,13 +474,16 @@ meta::pure::persistence::metamodel::batch::validitymilestoning::derivation::Sour
 
 Class
 {doc.doc = 'Backend details for executing on the On Premise ETL Service.'}
-meta::pure::persistence::metamodel::AlloyStreamingPersistencePipeBackend extends PersistencePipeBackend
+meta::pure::persistence::metamodel::PipelinePersistencePipeBackend extends PersistencePipeBackend
 {
    {doc.doc = 'The property in the model class that provides the ownership of a pipeline.'}
    ownership: Ownership[1];
 
    {doc.doc = 'The property in the model class that provides the maintenance policy of a pipeline.'}
    policy: Policy[1];
+   
+   {doc.doc = 'The property in the model class that provides the user which would execute the pipeline.'}
+   runner: User[1];
 }
 
 /**********
@@ -527,6 +531,32 @@ meta::pure::persistence::metamodel::ownership::SystemIdBasedOwnership extends Ow
 
    {doc.doc = 'The type of system that owns pipelines'}
    systemType: String[1];
+}
+
+/**********
+ * Alloy Streaming - User
+ **********/
+
+Class
+<<typemodifiers.abstract>>
+{doc.doc = 'Run as User details for executing Alloy Streaming pipelines.'}
+meta::pure::persistence::metamodel::runner::User
+{
+}
+
+Class
+{doc.doc = 'Local user to configure currently authenticated user for executing Alloy Streaming pipelines.'}
+meta::pure::persistence::metamodel::runner::LocalUser extends User
+{
+}
+
+
+Class
+{doc.doc = 'System account user for executing Alloy Streaming pipelines.'}
+meta::pure::persistence::metamodel::runner::SystemAccountUser extends User
+{
+    username: String[1];
+    /*Todo: (luhads) Provide a mechanism for specifying the keytab credental vault reference*/
 }
 
 /**********
