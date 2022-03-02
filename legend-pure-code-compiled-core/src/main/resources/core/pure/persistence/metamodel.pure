@@ -476,14 +476,47 @@ Class
 {doc.doc = 'Backend details for executing on the On Premise ETL Service.'}
 meta::pure::persistence::metamodel::PipelinePersistencePipeBackend extends PersistencePipeBackend
 {
+   /*Todo: (luhads) Support governance as mandatory configuration*/
+
    {doc.doc = 'The property in the model class that provides the ownership of a pipeline.'}
    ownership: Ownership[1];
 
    {doc.doc = 'The property in the model class that provides the maintenance policy of a pipeline.'}
    policy: Policy[1];
-   
+
    {doc.doc = 'The property in the model class that provides the user which would execute the pipeline.'}
    runner: User[1];
+}
+
+/**********
+ * Alloy Streaming - Reader
+ **********/
+
+Class
+{doc.doc = 'A Service reader with Alloy Streaming execution details.'}
+meta::pure::persistence::metamodel::reader::PipelineServiceReader extends ServiceReader
+{
+    /*Todo: (luhads) Support input parameters for Alloy Services*/
+    {doc.doc = 'Runtime specification for Service used within the Pipeline.'}
+    serviceExecutionRuntime: PipelineServiceExecutionRuntime[1];
+}
+
+Class
+<<typemodifiers.abstract>>
+{doc.doc = 'Runtime specification for Service used within the Pipeline.'}
+meta::pure::persistence::metamodel::reader::PipelineServiceExecutionRuntime
+{
+}
+
+Class
+<<typemodifiers.abstract>>
+{doc.doc = 'Artifact details for embedded execution of Service used within the Pipeline.'}
+meta::pure::persistence::metamodel::reader::PipelineServiceArtifactExecutionRuntime
+{
+    /*Todo: (luhads) Support input parameters for Alloy Services - what if they belong to different projects?*/
+    groupId: String[1];
+    artifactId: String[1];
+    version: String[1];   
 }
 
 /**********
