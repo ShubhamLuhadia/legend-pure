@@ -512,7 +512,7 @@ meta::pure::persistence::metamodel::reader::PipelineServiceExecutionRuntime
 Class
 <<typemodifiers.abstract>>
 {doc.doc = 'Artifact details for embedded execution of Service used within the Pipeline.'}
-meta::pure::persistence::metamodel::reader::PipelineServiceArtifactExecutionRuntime
+meta::pure::persistence::metamodel::reader::PipelineServiceArtifactExecutionRuntime extends PipelineServiceExecutionRuntime 
 {
     /*Todo: (luhads) Support input parameters for Alloy Services - what if they belong to different projects?*/
     groupId: String[1];
@@ -563,7 +563,7 @@ meta::pure::persistence::metamodel::trigger::ScheduledTrigger extends Trigger
     endDate: StrictDate[0..1];
     repeatCount: Integer[0..1];
     repeatIntervalMinutes: Integer[0..1];
-    maxDurationMinutes: Integer[0..1]
+    maxDurationMinutes: Integer[0..1];
 }
 
 /**********
