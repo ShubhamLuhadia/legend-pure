@@ -612,8 +612,8 @@ Class
 {doc.doc = 'System account user for executing Alloy Streaming pipelines.'}
 meta::pure::persistence::metamodel::runner::SystemAccountUser extends User
 {
-    username: String[1];
-    /*Todo: (luhads) Provide a mechanism for specifying the keytab credental vault reference*/
+   publicUserName: String[1];
+   privateKeyVaultReference: String[1];
 }
 
 /**********
