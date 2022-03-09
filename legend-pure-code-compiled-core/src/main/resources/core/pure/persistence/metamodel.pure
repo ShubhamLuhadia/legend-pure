@@ -479,6 +479,9 @@ meta::pure::persistence::metamodel::PipelinePersistencePipeBackend extends Persi
 {
    /*Todo: (luhads) Support governance as mandatory configuration*/
 
+   {doc.doc = 'The property in the model class that provides the trigger of a pipeline.'}
+   trigger: PipelineTrigger[1];
+
    {doc.doc = 'The property in the model class that provides the ownership of a pipeline.'}
    ownership: Ownership[1];
 
@@ -548,8 +551,15 @@ meta::pure::persistence::metamodel::batch::targetspecification::PipelineRelation
  **********/
 
 Class
+<<typemodifiers.abstract>>
+{doc.doc = 'Trigger details specific to Alloy Streaming pipelines.'}
+meta::pure::persistence::metamodel::trigger::PipelineTrigger
+{
+}
+
+Class
 {doc.doc = 'A trigger defined by the provided schedule.'}
-meta::pure::persistence::metamodel::trigger::ScheduledTrigger extends Trigger
+meta::pure::persistence::metamodel::trigger::ScheduledTrigger extends PipelineTrigger
 {
     {doc.doc = 'the pattern describing the days on which to schedule an instance of the pipeline'}
     scheduleDays: String[1];
