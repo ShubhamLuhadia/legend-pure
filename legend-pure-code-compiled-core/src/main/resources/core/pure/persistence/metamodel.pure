@@ -19,7 +19,6 @@ import meta::pure::persistence::metamodel::trigger::*;
 import meta::pure::persistence::metamodel::ownership::*;
 import meta::pure::persistence::metamodel::runner::*;
 import meta::pure::persistence::metamodel::policy::*;
-import meta::relational::metamodel::*;
 
 /**********
  * persistence pipe
@@ -530,11 +529,11 @@ meta::pure::persistence::metamodel::reader::PipelineServiceArtifactExecutionRunt
 Class
 {doc.doc = 'Alloy Streaming Persister that writes data in batches to a relational database sink.'}
 meta::pure::persistence::metamodel::batch::PipelineRelationalDatabaseBatchPersister extends BatchPersister
-{
-    {doc.doc = 'Database Store configuration providing details of the schemas, tables, primary keys, indices accessible as part of the pipeline sink'}
-    databaseStore: Database[1];
-    
+{    
+    {doc.doc = 'the name of the database corresponding to this target specification'}
     databaseName: String[1];
+
+    {doc.doc = 'the name of the schema (optional) corresponding to this target specification'}
     schemaName: String[0..1];
 }
 
@@ -544,6 +543,9 @@ meta::pure::persistence::metamodel::batch::targetspecification::PipelineRelation
 {
     {doc.doc = 'the name of the table corresponding to this target specification'}
     tableName: String[1];
+
+    {doc.doc = 'the primary keys of the table corresponding to this target specification'}    
+    primaryKeys: String[0..*];
 }
 
 /**********
